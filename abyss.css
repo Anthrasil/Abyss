@@ -1,12 +1,16 @@
 body {
     margin: 0;
+    overflow: hidden;
+    cursor: default;
 }
 
 #background {
+    position: absolute;
     height: 100vh;
     width: 100vw;
     background-color: grey;
     background-image: radial-gradient(grey, black);
+    z-index: -1;
 }
 
 #door {
@@ -18,4 +22,76 @@ body {
     width: 10%;
     left: 45%;
     top: 15%;
+}
+
+#inventory *:hover {
+    filter: brightness(1.2);
+}
+
+#inventory * {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.closed {
+    background-color: brown;
+    width: 2.5vw;
+    height: 25vh;
+    background-image: radial-gradient(brown, black);
+    border-radius: 5%;
+}
+
+.opened {
+    background-color: brown;
+    background-image: radial-gradient(brown, black);
+    width: 25vw;
+    height: min-content;
+    border-radius: 5%;
+}
+
+.line {
+    position: relative;
+    width: 100%;
+    height: min-content;
+}
+
+.place {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    background-color: gray;
+    border-radius: 25%;
+    opacity: 0.1;
+}
+
+#open-close {
+    margin-left: auto;
+    width: 2.5vw;
+    height: 2.5vw;
+    background-color: gray;
+    border-radius: 25%;
+}
+
+#open-close:hover {
+    cursor: pointer;
+}
+
+#Shop {
+    position: absolute;
+}
+
+#Inventory {
+    position: absolute;
+}
+
+#Refresh {
+    margin-left: auto;
+    width: min-content;
+    height: 2.5vw;
+    background-color: gray;
+    border-radius: 25%;
+}
+
+.closed .line :not(#open-close) {
+    display: none !important;
 }
