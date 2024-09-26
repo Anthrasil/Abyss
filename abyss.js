@@ -12,7 +12,6 @@ function handleUIEvents(monitor, stats) {
 
     let /**@type {HTMLElement} */inventory = monitor.querySelector("#inventory");
     inventoryEvent(stats, inventory);
-    refreshShop(inventory);
 }
 function refreshShop(inventory) {
     let refresh = inventory.querySelector("#Refresh");
@@ -21,6 +20,9 @@ function refreshShop(inventory) {
     })
 }
 function inventoryEvent(stats, inventory) {
+    openClose(stats, inventory);
+}
+function openClose(stats, inventory) {
     let openclose = inventory.querySelector("#open-close");
     openclose.addEventListener("click", (event) => {
         stats.open = !stats.open
