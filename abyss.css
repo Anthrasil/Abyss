@@ -1,5 +1,5 @@
 body {
-    margin: 0;
+    margin: 0px;
     overflow: hidden;
     cursor: default;
 }
@@ -57,11 +57,11 @@ body {
 }
 
 .place {
+    border: 1px solid black;
     width: 100%;
-    aspect-ratio: 1 / 1;
+    aspect-ratio: 1/1;
     background-color: gray;
     border-radius: 25%;
-    opacity: 0.1;
 }
 
 #open-close {
