@@ -38,13 +38,13 @@ body {
     background-color: brown;
     width: 2.5vw;
     height: 25vh;
-    background-image: radial-gradient(brown, black);
+    background-image: radial-gradient(brown, rgb(30, 30, 30));
     border-radius: 5%;
 }
 
 .opened {
     background-color: brown;
-    background-image: radial-gradient(brown, black);
+    background-image: radial-gradient(brown, rgb(30, 30, 30));
     width: 25vw;
     height: min-content;
     border-radius: 5%;
@@ -60,7 +60,7 @@ body {
     border: 1px solid black;
     width: 100%;
     aspect-ratio: 1/1;
-    background-color: gray;
+    background-color: rgba(128, 128, 128, 0.2);
     border-radius: 25%;
 }
 
@@ -85,7 +85,7 @@ body {
 }
 
 #Refresh {
-    margin-left: auto;
+    display: flex;
     width: min-content;
     height: 2.5vw;
     background-color: gray;
@@ -94,4 +94,49 @@ body {
 
 .closed .line :not(#open-close) {
     display: none !important;
+}
+
+.closed #handitem {
+    display: none !important;
+}
+
+#handitem {
+    position: absolute;
+    pointer-events: none;
+    width: 2.5vw;
+    height: 2.5vw;
+}
+
+.Coinline {
+    display: flex;
+    justify-content: space-around;
+}
+
+.coinWrapper {
+    display: flex;
+    align-items: center;
+}
+
+.coin {
+    position: relative;
+    width: 50%;
+    aspect-ratio: 1/1;
+}
+
+.coinTop {
+    width: 12%;
+    aspect-ratio: 1/1;
+}
+
+.coinText {
+    width: min-content;
+}
+
+#Coins {
+    width: min-content;
+    margin-left: 10%;
+}
+
+#shopText {
+    margin-left: auto;
 }
