@@ -10,9 +10,14 @@ let UIstats = {
     },
     "handitem": false,
     "coins": 100,
+    "types": [["damage", "sword.webp"]],
 }
 document.addEventListener("DOMContentLoaded", () => {
     handleUIEvents(monitor, UIstats, items);
+})
+document.addEventListener("click", () => {
+    let description = monitor.querySelector("#description");
+    updatedescription({ x: 0, y: 0 }, description);
 })
 function handleUIEvents(monitor, stats, items) {
     let /**@type {HTMLElement} */inventory = monitor.querySelector("#inventory");
@@ -46,6 +51,7 @@ function inventoryEvents(stats, inventory, items) {
     inventoryUIclicked(stats, inventory, items);
     eventHanditemUI(inventory)
     updateInventoryUI(stats, inventory, items);
+    eventdescription(stats, inventory)
 }
 function inventoryUIclicked(stats, inventory, items) {
     Object.keys(stats.row).forEach((key) => {
@@ -78,8 +84,10 @@ function ShopUIclicked(stats, inventory, items) {
         obj.addEventListener("click", (event) => {
             if (!stats.handitem) {
                 let item = stats.shop[index];
-                changeHanditemShop(index, stats, inventory, item);
-                updateShopUI(stats, inventory, items);
+                if (item) {
+                    changeHanditemShop(index, stats, inventory, item);
+                    updateShopUI(stats, inventory, items);
+                }
             }
         })
     })
@@ -124,6 +132,84 @@ function updateInventoryUI(stats, inventory) {
             }
         })
     })
+}
+function eventdescription(stats, /**@type {HTMLElement} */inventory) {
+    let description = inventory.querySelector("#description");
+    let show = {
+        x: 0,
+        y: 0,
+        text: "",
+        headline: "",
+        type: "",
+        value: "",
+    }
+    Object.keys(stats.row).forEach((key) => {
+        let obj = stats.row[key]
+        let line = inventory.querySelector(`#line${key - 1}`);
+        obj.forEach((el, index) => {
+            line.children[index].addEventListener("contextmenu", (event) => {
+                event.preventDefault();
+                if (!stats.row[key][index].stats) {
+                    updatedescription(show, description, stats.types);
+                    return;
+                }
+                show.x = line.children[index].getBoundingClientRect().x;
+                show.y = line.children[index].getBoundingClientRect().y;
+                show.text = stats.row[key][index].description;
+                show.headline = stats.row[key][index].name;
+                show.type = stats.row[key][index].type;
+                show.value = stats.row[key][index].stats[show.type];
+                updatedescription(show, description, stats.types);
+            })
+        })
+    })
+    stats.shop.forEach((el, index) => {
+        let obj = inventory.querySelector("#shop").children[index];
+        obj.addEventListener("contextmenu", (event) => {
+            event.preventDefault();
+            if (!stats.shop[index].stats) {
+                updatedescription(show, description, stats.types);
+                return;
+            }
+            show.x = obj.getBoundingClientRect().x;
+            show.y = obj.getBoundingClientRect().y;
+            show.text = stats.shop[index].description;
+            show.headline = stats.shop[index].name;
+            show.type = stats.shop[index].type;
+            show.value = stats.shop[index].stats[show.type];
+            updatedescription(show, description, stats.types);
+        })
+    })
+    updatedescription(show, description);
+}
+function updatedescription(show, /**@type {HTMLElement} */description, types) {
+    let stats = description.querySelector("#stat");
+    let image = stats.querySelector("#image");
+    if (show.x == 0 && show.y == 0) {
+        description.style.display = "none"
+        image.src = "";
+    } else {
+        Object.keys(show).forEach((key) => {
+            if (!show[key]) return
+        })
+        description.style.display = "block"
+        description.style.left = `${show.x}px`
+        description.style.top = `${show.y + description.getBoundingClientRect().height / 2}px`
+        let headline = description.querySelector("#headline")
+        headline.innerText = show.headline
+        let text = description.querySelector("#text")
+        text.innerText = show.text;
+        if (!show.value || !show.type) {
+            return;
+        }
+        let value = stats.querySelector("#value");
+        types.forEach(type => {
+            if (type[0] = show.type) {
+                image.src = `images/sword.webp`;
+                value.innerText = show.value
+            }
+        })
+    }
 }
 function updateShopUI(stats, /**@type{HTMLElement} */inventory, items) {
     let shop = inventory.querySelector("#shop");
