@@ -137,7 +137,7 @@ body {
 }
 
 #Coins {
-    width: min-content;
+    width: calc(min-content+1px);
     margin-left: 10%;
 }
 
@@ -147,25 +147,38 @@ body {
 
 #description {
     position: absolute;
-    pointer-events: none;
     width: 6.25vw;
     aspect-ratio: 1/1;
     background-color: rgba(128, 128, 128, 0.8);
     border-radius: 25%;
 }
 
-#description #text {
-    font-size: small;
+#descriptionheadline {
+    height: min-content;
+    margin: 5%;
+    margin-top: 10%;
 }
 
-#stat {
+#descriptiontext {
     position: absolute;
-    justify-content: right;
-    top: 11vh;
-    right: 0.5vh;
+    font-size: medium;
+    width: 100%;
+    justify-content: center;
+    margin: 0px;
+    margin-top: 5%;
 }
 
-#image {
-    width: 15%;
+#descriptionstat {
+    position: relative;
+    margin-left: auto;
+    width: min-content;
+    top: 45%;
+    height: 1rem;
+}
+
+#descriptionimage {
+    position: relative;
+    height: 100%;
     aspect-ratio: 1/1;
+    bottom: 6.5%;
 }
