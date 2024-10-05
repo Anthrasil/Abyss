@@ -183,8 +183,8 @@ function eventdescription(stats, /**@type {HTMLElement} */inventory) {
     updatedescription(show, description);
 }
 function updatedescription(show, /**@type {HTMLElement} */description, types) {
-    let stats = description.querySelector("#stat");
-    let image = stats.querySelector("#image");
+    let stats = description.querySelector("#descriptionstat");
+    let image = stats.querySelector("#descriptionimage");
     if (show.x == 0 && show.y == 0) {
         description.style.display = "none"
         image.src = "";
@@ -195,14 +195,17 @@ function updatedescription(show, /**@type {HTMLElement} */description, types) {
         description.style.display = "block"
         description.style.left = `${show.x}px`
         description.style.top = `${show.y + description.getBoundingClientRect().height / 2}px`
-        let headline = description.querySelector("#headline")
+        let headline = description.querySelector("#descriptionheadline")
         headline.innerText = show.headline
-        let text = description.querySelector("#text")
+        let text = description.querySelector("#descriptiontext")
         text.innerText = show.text;
-        if (!show.value || !show.type) {
-            return;
+        let value = stats.querySelector("#descriptionvalue");
+        if (!show.value) {
+            value.innerText = "";
         }
-        let value = stats.querySelector("#value");
+        if (!show.type) {
+            image.src = "";
+        }
         types.forEach(type => {
             if (type[0] = show.type) {
                 image.src = `images/sword.webp`;
