@@ -182,3 +182,9 @@ body {
     aspect-ratio: 1/1;
     bottom: 6.5%;
 }
+
+.opponentimage {
+    background-color: black;
+    width: 10px;
+    aspect-ratio: 1/1;
+}
