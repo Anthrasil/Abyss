@@ -1,5 +1,5 @@
 body {
-    margin: 0;
+    margin: 0px;
     overflow: hidden;
     cursor: default;
 }
@@ -38,13 +38,13 @@ body {
     background-color: brown;
     width: 2.5vw;
     height: 25vh;
-    background-image: radial-gradient(brown, black);
+    background-image: radial-gradient(brown, rgb(30, 30, 30));
     border-radius: 5%;
 }
 
 .opened {
     background-color: brown;
-    background-image: radial-gradient(brown, black);
+    background-image: radial-gradient(brown, rgb(30, 30, 30));
     width: 25vw;
     height: min-content;
     border-radius: 5%;
@@ -57,11 +57,11 @@ body {
 }
 
 .place {
+    border: 1px solid black;
     width: 100%;
-    aspect-ratio: 1 / 1;
-    background-color: gray;
+    aspect-ratio: 1/1;
+    background-color: rgba(128, 128, 128, 0.2);
     border-radius: 25%;
-    opacity: 0.1;
 }
 
 #open-close {
@@ -85,7 +85,7 @@ body {
 }
 
 #Refresh {
-    margin-left: auto;
+    display: flex;
     width: min-content;
     height: 2.5vw;
     background-color: gray;
@@ -94,4 +94,97 @@ body {
 
 .closed .line :not(#open-close) {
     display: none !important;
+}
+
+.closed #handitem {
+    display: none !important;
+}
+
+.closed #description {
+    display: none !important;
+}
+
+#handitem {
+    position: absolute;
+    pointer-events: none;
+    width: 2.5vw;
+    height: 2.5vw;
+}
+
+.Coinline {
+    display: flex;
+    justify-content: space-around;
+}
+
+.coinWrapper {
+    display: flex;
+    align-items: center;
+}
+
+.coin {
+    position: relative;
+    width: 50%;
+    aspect-ratio: 1/1;
+}
+
+.coinTop {
+    width: 12%;
+    aspect-ratio: 1/1;
+}
+
+.coinText {
+    width: min-content;
+}
+
+#Coins {
+    width: calc(min-content+1px);
+    margin-left: 10%;
+}
+
+#shopText {
+    margin-left: auto;
+}
+
+#description {
+    position: absolute;
+    width: 6.25vw;
+    aspect-ratio: 1/1;
+    background-color: rgba(128, 128, 128, 0.8);
+    border-radius: 25%;
+}
+
+#descriptionheadline {
+    height: min-content;
+    margin: 5%;
+    margin-top: 10%;
+}
+
+#descriptiontext {
+    position: absolute;
+    font-size: medium;
+    width: 100%;
+    justify-content: center;
+    margin: 0px;
+    margin-top: 5%;
+}
+
+#descriptionstat {
+    position: relative;
+    margin-left: auto;
+    width: min-content;
+    top: 45%;
+    height: 1rem;
+}
+
+#descriptionimage {
+    position: relative;
+    height: 100%;
+    aspect-ratio: 1/1;
+    bottom: 6.5%;
+}
+
+.opponentimage {
+    background-color: black;
+    width: 10px;
+    aspect-ratio: 1/1;
 }
