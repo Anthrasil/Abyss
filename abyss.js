@@ -3,7 +3,7 @@ let UIstats = {
     "open": false,
     "shop": [false, false, false, false],
     "row": {
-        1: [items["normalSword"], false, false, false, false, false, false, false, false, false],
+        1: [false/*{}*/, false, false, false, false, false, false, false, false, false],
         2: [false, false, false, false, false, false, false, false, false, false],
         3: [false, false, false, false, false, false, false, false, false, false],
         4: [false, false, false, false, false, false, false, false, false, false],
@@ -11,6 +11,17 @@ let UIstats = {
     "handitem": false,
     "coins": 100,
     "types": [["damage", "sword.webp"]],
+    "opponents": {
+        1: {
+            "type": false,
+        },
+        2: {
+            "type": false,
+        },
+        3: {
+            "type": false,
+        }
+    },
 }
 document.addEventListener("DOMContentLoaded", () => {
     handleUIEvents(monitor, UIstats, items);
@@ -44,7 +55,8 @@ function refreshShop(stats, inventory, items) {
     updateShopUI(stats, inventory, items);
 }
 function inventoryEvents(stats, inventory, items) {
-    updateCoinUI(stats, inventory)
+    updateCoinUI(stats, inventory);
+    dragInventoryUI(inventory);
     openClose(stats, inventory);
     refreshShop(stats, inventory, items);
     ShopUIclicked(stats, inventory, items);
@@ -59,20 +71,20 @@ function inventoryUIclicked(stats, inventory, items) {
         let line = inventory.querySelector(`#line${key - 1}`);
         obj.forEach((el, index) => {
             line.children[index].addEventListener("click", (event) => {
-                changeHanditemInventory(key, index, stats, inventory)
+                changeHanditemInventory(key, index, stats)
                 updateInventoryUI(stats, inventory, items);
             })
         })
     })
 }
-function changeHanditemInventory(row, place, stats, inventory) {
+function changeHanditemInventory(row, place, stats) {
     let newHanditem = stats.row[row][place];
     stats.row[row][place] = stats.handitem;
     stats.handitem = newHanditem;
-    updateHanditemUI(stats, inventory)
+    updateHanditemUI(stats)
 }
-function eventHanditemUI(inventory) {
-    let handitem = inventory.querySelector("#handitem");
+function eventHanditemUI() {
+    let handitem = document.querySelector("#handitem");
     document.addEventListener("mousemove", (event) => {
         handitem.style.left = `${event.clientX - handitem.width / 2}px`;
         handitem.style.top = `${event.clientY - handitem.height / 2}px`;
@@ -100,7 +112,7 @@ function changeHanditemShop(place, stats, inventory, item) {
     let newHanditem = stats.shop[place];
     stats.shop[place] = stats.handitem;
     stats.handitem = newHanditem;
-    updateHanditemUI(stats, inventory);
+    updateHanditemUI(stats);
 }
 function updateCoinUI(stats, inventory) {
     let Coins = inventory.querySelector("#Coins");
@@ -108,8 +120,8 @@ function updateCoinUI(stats, inventory) {
         Coins.innerText = `${stats.coins}`;
     }
 }
-function updateHanditemUI(stats, inventory) {
-    let handitem = inventory.querySelector("#handitem");
+function updateHanditemUI(stats) {
+    let handitem = document.querySelector("#handitem");
     if (stats.handitem) {
         if (handitem.src !== `images/${stats.handitem.img}`) {
             handitem.src = `images/${stats.handitem.img}`;
@@ -245,5 +257,43 @@ function openClose(stats, inventory) {
         } else if (!stats.open && inventory.classList.contains("opened")) {
             inventory.classList.replace("opened", "closed")
         }
+        correctElementUI(inventory, { width: window.innerWidth, height: window.innerHeight })
     })
+}
+function dragInventoryUI(/**@type {HTMLElement} */inventory) {
+    let offset = {
+        x: 0,
+        y: 0,
+    }
+    inventory.addEventListener("dragstart", (event) => {
+        offset.x = event.clientX - inventory.getBoundingClientRect().left
+        offset.y = event.clientY - inventory.getBoundingClientRect().top
+    })
+    inventory.addEventListener("dragend", (event) => {
+        inventory.style.left = `${event.clientX - offset.x}px`
+        inventory.style.top = `${event.clientY - offset.y}px`
+        correctElementUI(inventory, { width: window.innerWidth, height: window.innerHeight })
+    });
+    let children = Array.from(inventory.querySelectorAll('*'))
+    children.forEach((child) => {
+        child.setAttribute('draggable', 'false');
+    })
+    document.addEventListener("dragover", (event) => {
+        event.preventDefault();
+    })
+}
+function correctElementUI(element, max = { width: 0, height: 0 }) {
+    let Bounded = element.getBoundingClientRect()
+    if (Bounded.left < 0) {
+        element.style.left = "0px"
+    }
+    if (Bounded.top < 0) {
+        element.style.top = "0px"
+    }
+    if (Bounded.left + Bounded.width > max.width) {
+        element.style.left = `${max.width - Bounded.width}px`
+    }
+    if (Bounded.top + Bounded.height > max.height) {
+        element.style.top = `${max.height - Bounded.height}px`
+    }
 }
