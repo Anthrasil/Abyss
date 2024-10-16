@@ -20,3 +20,14 @@ let items = {
         }
     }
 }
+let opponents = {
+    troll: {
+        name: "troll",
+        img: "Troll.webp",
+        stats: {
+            damage: 1,
+            maxhealth: 2,
+            health: 2,
+        }
+    }
+}
